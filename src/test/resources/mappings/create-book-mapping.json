@@ -1,0 +1,17 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "/books/",
+    "bodyPatterns": [
+      { "matchesJsonPath": "$.userId" },
+      { "matchesJsonPath": "$.isbn" },
+      { "matchesJsonPath": "$.title" },
+      { "matchesJsonPath": "$.author" }
+    ]
+  },
+  "response": {
+    "status": 201,
+    "headers": { "Content-Type": "application/json" },
+    "bodyFileName": "create-book-response.json"
+  }
+}

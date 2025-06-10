@@ -1,0 +1,6 @@
+<configuration>
+  <theme>STANDARD</theme>
+  <encoding>UTF-8</encoding>
+  <documentTitle>BookStore API Test Report</documentTitle>
+  <reportName>BookStore API Tests</reportName>
+</configuration>

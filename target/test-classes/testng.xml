@@ -1,0 +1,10 @@
+<suite name="BookStoreMockExtentSuite" parallel="false">
+  <listeners>
+    <listener class-name="Hooks.WireMockHooks"/>
+  </listeners>
+  <test name="BookStore Tests">
+    <classes>
+      <class name="Runner.TestNGRunner"/>
+    </classes>
+  </test>
+</suite>

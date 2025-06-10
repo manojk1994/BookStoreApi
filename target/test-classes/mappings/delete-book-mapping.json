@@ -1,0 +1,10 @@
+{
+  "request": {
+    "method": "DELETE",
+    "urlPattern": "/books/([^/]+)"
+  },
+  "response": {
+    "status": 204,
+    "headers": { "Content-Type": "application/json" }
+  }
+}

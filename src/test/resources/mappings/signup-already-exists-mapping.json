@@ -1,0 +1,15 @@
+{
+  "priority": 1,
+  "request": {
+    "method": "POST",
+    "url": "/signup",
+    "bodyPatterns": [
+      { "matchesJsonPath": "$[?(@.email == 'EXISTING@mail.com')]" }
+    ]
+  },
+  "response": {
+    "status": 400,
+    "headers": { "Content-Type": "application/json" },
+    "bodyFileName": "signup-already-exists-response.json"
+  }
+}
