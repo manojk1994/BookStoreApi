@@ -5,7 +5,7 @@ This project demonstrates a Cucumber-TestNG BDD framework for testing a BookStor
 
 ## Prerequisites
 
-- Java 21 or later  
+- Java 17 or later  
 - Maven 3.6 or later  
 - An IDE supporting Maven (IntelliJ IDEA, Eclipse) or a command-line shell
 
