@@ -1,4 +1,4 @@
-# BookStore API Mock & ExtentReports Project
+# BookStore API Mock Project
 ## Overview
 
 This project demonstrates a Cucumber-TestNG BDD framework for testing a BookStore API against WireMock stubs, with reporting powered by ExtentReports. All API calls are mocked in tests, ensuring fast, repeatable, self-contained runs.
