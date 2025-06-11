@@ -11,7 +11,10 @@ import org.testng.IExecutionListener;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
 
+import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.options;
@@ -23,25 +26,37 @@ public class ExtentTestNGListener implements ITestListener, IExecutionListener {
 
     @Override
     public void onExecutionStart() {
-        // --- start WireMock ---
-        wireMockServer = new WireMockServer(options().dynamicPort());
-        wireMockServer.start();
-        int port = wireMockServer.port();
-        List<StubMapping> mappings = wireMockServer.getStubMappings();
-        System.out.println(">>> WireMock listening on port: " + port);
-        System.out.println(">>> Stub mappings loaded: " + mappings.size());
-        RestAssured.baseURI = "http://localhost:" + port;
-        RestAssured.defaultParser = io.restassured.parsing.Parser.JSON;
+        // 1) Compute a timestamped folder & file name
+        String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String reportDir  = "target/extent-reports/run-" + timestamp;
+        String reportPath = reportDir + "/Spark.html";
 
-        // --- init ExtentReports ---
-        ExtentSparkReporter spark = new ExtentSparkReporter("target/extent-report.html");
+        // 2) Make sure the directory exists
+        File dir = new File(reportDir);
+        if (!dir.exists() && !dir.mkdirs()) {
+            throw new RuntimeException("Could not create report directory: " + reportDir);
+        }
+
+        // 3) Create the reporter against that path
+        ExtentSparkReporter spark = new ExtentSparkReporter(reportPath);
         try {
             spark.loadXMLConfig("extent-config.xml");
         } catch (IOException e) {
             throw new RuntimeException("Failed to load extent-config.xml", e);
         }
+
+        // 4) Attach it
         extent = new ExtentReports();
         extent.attachReporter(spark);
+
+        // 5) (rest of your setup: start WireMock, set baseURI, etc.)
+        wireMockServer = new WireMockServer(options().dynamicPort());
+        wireMockServer.start();
+        int port = wireMockServer.port();
+        System.out.println(">>> WireMock on port: " + port +
+                ", loaded stubs: " + wireMockServer.getStubMappings().size());
+        RestAssured.baseURI = "http://localhost:" + port;
+        RestAssured.defaultParser = io.restassured.parsing.Parser.JSON;
     }
 
     @Override
